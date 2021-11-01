@@ -9,7 +9,6 @@ from django.db.models import Q
 # Create your views here.
 from django.views import generic
 from .models import Post
-from .permissions import *
 
 
 
@@ -59,12 +58,6 @@ class UpdatePostView(LoginRequiredMixin,generic.UpdateView):
         else:
             raise PermissionError('Only creator of the thi post can edit it.')        
 
-    # def has_permission(self):
-    #     """
-    #     Override this method to customize the way permissions are checked.
-    #     """
-    #     # perms = self.get_permission_required()
-    #     # has_perms = self.request.user.has_perms(perms)
     '''
     ipdb> self.request.resolver_match.kwargs                                                                                                                     {'slug': 'happy-diwali'}                                                      
     '''
