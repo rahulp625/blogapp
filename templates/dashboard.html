@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %} All Blogs {% endblock %}
+{% block dashboardactive %} active {% endblock dashboardactive %}
+
+{% block css %}
+
+{% endblock %}
+{% block body %}
+<div class="container mt-5 mb-3">
+
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-lg-4 my-4">
+            <div class="card shadow" style="width: 20rem; height: 33rem;">
+                {% if image %}
+                <img src="/media/{{post.image}}" class="card-img-top" alt="..." height="250px">
+                {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title">{{post.title}} <br><small>by {{post.author}} {% if not post.published %}(Hidden){% endif %}</small></h5>
+                  <p class="card-text">{{post.content| truncatechars:210}}</p>
+                  {% if user.is_superuser or user.id == post.author.id %}
+                  <a href="/post/{{post.slug}}/edit" class="btn btn-primary">
+                  Edit
+                  </a>
+                  {% else %}
+                  <a href="/post/{{post.slug}}" class="btn btn-primary">
+                  Read More
+                  </a>
+                    {% endif %}
+
+                  </a>
+                  {% if user.is_superuser or user.id == post.author.id %}
+                  <!-- <a href="/post/{{post.slug}}/confirm-delete" class="btn btn-danger mx-4">Delete Blog</a> --> <!-- Currently this one is not working with DeleteView--->
+                  <a href="/post/{{post.id}}/delete" class="btn btn-danger mx-4">Delete Blog</a>
+                  {% endif %}
+                </div>
+              </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script></script>
+{% endblock %}
